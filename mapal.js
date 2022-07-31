@@ -1,4 +1,6 @@
 console.log('connect OK');
+
+let attempt = 5;
 // output strings constants
 const rock = 'rock crushes scissors';
 const paper = 'paper covers rock';
@@ -6,6 +8,7 @@ const scissors = 'scissors cuts paper';
 const loss = 'You lose!';
 const win = 'You win!';
 const draw = 'Draw!';
+
 const variants = {
     0: 'rock',
     1: 'paper',
@@ -18,6 +21,21 @@ let computer;
 function getComputerChoice() {
     const choice = variants[Math.floor(Math.random() * 3)];
     return choice;
+}
+
+function getUserChoice(round) {
+    let choice;
+    while (true) {
+        choice = prompt(`Please ENTER rock / paper / scissors / end !\nROUND: ${round + 1}`).toLowerCase().trim();
+        if (!choice || choice === 'end') {
+            return 'end';
+        } else if (Object.values(variants).includes(choice)) {
+            return choice;
+        } else {
+            alert('Invalid choice\nTRY AGAIN !');
+            continue;
+        }
+    }
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -59,9 +77,13 @@ function game(rounds) {
     player = 0;
     computer = 0;
     for (let i = 0; i < rounds; i++) {
-        const playerSelection = 'rock';
+        const playerSelection = getUserChoice(i); //'rock';
+        if (playerSelection === 'end') {
+            alert('Your choice was END the game :)');
+            break;
+        }
         const computerSelection = getComputerChoice();
-        console.log(`ROUND ${i+1}: `, playerSelection, computerSelection);
+        console.log(`ROUND ${i + 1}: `, playerSelection, computerSelection);
         console.log(playRound(playerSelection, computerSelection));
     }
     if (player === computer) {
@@ -72,3 +94,6 @@ function game(rounds) {
         return `${loss} ${player} to ${computer}`;
     }
 }
+
+//start game
+console.log(game(attempt));
