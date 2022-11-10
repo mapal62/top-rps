@@ -1,5 +1,6 @@
 console.log('connect OK');
 
+
 let attempt = 5;
 // output strings constants
 const loss = 'You lose!';
@@ -17,8 +18,11 @@ const reason = {
 let player;
 let computer;
 
+//create graphical user interface
+buildGui();
+
 //start game
-console.log(game(attempt));
+//console.log(game(attempt));
 
 // ---functional part---
 function getComputerChoice() {
@@ -82,4 +86,34 @@ function game(rounds) {
     } else {
         return `${loss} ${player} to ${computer}`;
     }
+}
+
+function buildGui(){
+    player = 0;
+    computer = 0;
+
+    const box = document.getElementById('box');
+    const first = document.createElement('button');
+    first.innerText = variants[0];
+    first.addEventListener('click', userClicked);
+    box.appendChild(first);
+
+    const second = document.createElement('button');
+    second.innerText = variants[1];
+    second.addEventListener('click', userClicked);
+    box.appendChild(second);
+
+    const third = document.createElement('button');
+    third.innerText = variants[2];
+    third.addEventListener('click', userClicked);
+    box.appendChild(third);
+
+}
+
+function userClicked(){
+    const result = document.getElementById('result');
+    const playerSelection = this.textContent;
+    const computerSelection = getComputerChoice();
+    result.innerText = playWithArray(playerSelection, computerSelection);
+result.innerText += `\nPlayer: ${player}, Computer: ${computer}`
 }
