@@ -18,102 +18,68 @@ const reason = {
 let player;
 let computer;
 
-//create graphical user interface
-//buildGui();
+//DOM selectors
 
-//start game
-//console.log(game(attempt));
+//create graphical user interface
+window.onload = () => buildGui();
+
 
 // ---functional part---
 function getComputerChoice() {
     return variants[Math.floor(Math.random() * variants.length)];
 }
 
-function getUserChoice(round) {
-    let choice;
-    let message = 'Please choose: ';
-    variants.forEach(element => {
-        message += `${element.toUpperCase()} / `;
-    });
-    message += `end !\nROUND: ${round + 1}`;
-    while (true) {
-        choice = prompt(message).toLowerCase().trim();
-        if (!choice || choice === 'end') {
-            return 'end';
-        } else if (variants.includes(choice)) {
-            return choice;
-        } else {
-            alert('Invalid choice\nTRY AGAIN !');
-            continue;
-        }
-    }
-}
-
-
 function playWithArray(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
-        return `${draw}`;
+        return `${draw}\n`;
     }
     const index = variants.indexOf(playerSelection);
     const nextIndex = (index + 1) % variants.length;
     if (computerSelection === variants[nextIndex]) {
         computer++;
-        return `${loss} ${reason[computerSelection]}`;
+        return `${loss}\n${reason[computerSelection]}`;
     } else {
         player++;
-        return `${win} ${reason[playerSelection]}`
+        return `${win}\n${reason[playerSelection]}`
     }
 
 }
 
-function game(rounds) {
-    player = 0;
+function buildGui() {
+    const cover = document.getElementById('covering');
+    cover.addEventListener('click', (e) => {
+        cover.hidden = true;
+        player = 0;
     computer = 0;
-    for (let i = 0; i < rounds; i++) {
-        const playerSelection = getUserChoice(i); //'rock';
-        if (playerSelection === 'end') {
-            alert('Your choice was END the game :)');
-            break;
-        }
-        const computerSelection = getComputerChoice();
-        console.log(`ROUND ${i + 1}: `, playerSelection, computerSelection);
-        console.log(playWithArray(playerSelection, computerSelection));
-    }
-    if (player === computer) {
-        return `${draw} ${player} to ${computer}`;
-    } else if (player > computer) {
-        return `${win} ${player} to ${computer}`;
-    } else {
-        return `${loss} ${player} to ${computer}`;
-    }
+    const result = document.querySelector('#result h3');
+result.innerText = '';
+})
+    const boxes = document.querySelectorAll('.choice');
+    boxes.forEach((box) => {
+        box.addEventListener('click', userClicked)
+    })
 }
 
-function buildGui(){
-    player = 0;
-    computer = 0;
-
-    const box = document.getElementById('box');
-    const first = document.createElement('button');
-    first.innerText = variants[0];
-    first.addEventListener('click', userClicked);
-    box.appendChild(first);
-
-    const second = document.createElement('button');
-    second.innerText = variants[1];
-    second.addEventListener('click', userClicked);
-    box.appendChild(second);
-
-    const third = document.createElement('button');
-    third.innerText = variants[2];
-    third.addEventListener('click', userClicked);
-    box.appendChild(third);
-
-}
-
-function userClicked(){
-    const result = document.getElementById('result');
-    const playerSelection = this.textContent;
+function userClicked() {
+    const result = document.querySelector('#result h3');
+    this.classList.add('selected');
+    setTimeout(() => { afterChoice(this) }, 500);
+    const playerSelection = this.id;
     const computerSelection = getComputerChoice();
     result.innerText = playWithArray(playerSelection, computerSelection);
-result.innerText += `\nPlayer: ${player}, Computer: ${computer}`
+    result.innerText += `\nPlayer: ${player}, Computer: ${computer}`
+}
+function afterChoice(item) {
+    item.classList.remove('selected');
+    if (player === 5 || computer === 5) {
+        player > computer ? gameOver('player') : gameOver('computer')
+    }
+}
+function gameOver(winner) {
+const final = document.getElementById('newgame');
+final.innerText = `
+${winner === 'player' ? win : loss}\n${player} : ${computer}\nRESTART
+`
+const cover = document.getElementById('covering');
+cover.hidden = false;
 }
