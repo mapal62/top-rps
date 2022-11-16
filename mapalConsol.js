@@ -22,7 +22,7 @@ let computer;
 //buildGui();
 
 //start game
-//console.log(game(attempt));
+console.log(game(attempt));
 
 // ---functional part---
 function getComputerChoice() {

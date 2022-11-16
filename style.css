@@ -1,0 +1,36 @@
+body {
+    box-sizing: border-box;
+}
+
+#base {
+    width: 80vw;
+    margin: 0 auto;
+}
+
+img {
+    width: 100%;
+}
+#play {
+    position: relative;
+    padding: 8%;
+    border: 1px solid black;
+}
+.choice {
+    position: absolute;
+    width: 40%;
+    height: 40%;
+    border: 5px dotted grey;
+    border-radius: 50%;
+}
+#rock {
+    top: 0;
+    left: 25%;
+}
+#paper {
+    bottom: 8%;
+    left: 0;
+}
+#scissors {
+    bottom: 8%;
+    right: 0;
+}
