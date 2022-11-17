@@ -22,6 +22,12 @@ img {
     padding: 8%;
     border: 1px solid black;
 }
+#machine {
+    position: absolute;
+    width: 20%;
+    top: 44%;
+    left: 40%;
+}
 .choice {
     position: absolute;
     width: 40%;
@@ -32,7 +38,7 @@ img {
     transition-duration: 300ms;
 }
 .selected {
-border: 5px solid red;
+    border: 5px solid red;
 }
 #rock {
     top: 0;
@@ -40,11 +46,11 @@ border: 5px solid red;
 }
 #paper {
     bottom: 8%;
-    left: 0;
+    right: 0;
 }
 #scissors {
     bottom: 8%;
-    right: 0;
+    left: 0;
 }
 
 #covering {
@@ -52,16 +58,16 @@ border: 5px solid red;
     top: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(230, 176, 15, 0.604);
+    background-color: rgba(232, 206, 131, 0.604);
 }
 #newgame {
     padding: 15vw;
     text-align: center;
-font-size: 3rem;
-font-weight: 600;
-color: rgb(23, 13, 111);
-letter-spacing: 2vw;
-transform: rotate(-30deg);
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgb(23, 13, 111);
+    letter-spacing: 2vw;
+    transform: rotate(-30deg);
 }
 
 @media (orientation: landscape) {
